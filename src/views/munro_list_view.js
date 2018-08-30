@@ -7,14 +7,14 @@ const MunroListView = function (container) {
 
 MunroListView.prototype.bindEvents = function (){
   PubSub.subscribe('Munros:selected-region-ready', (event) => {
-    this.munros = event.detail;
-    // console.log(this.munros);
+    this.regions = event.detail;
+    console.log(this.regions);
     this.render();
   });
 };
 
 MunroListView.prototype.render = function () {
-  this.munros.forEach((munro) => {
+  this.regions.munros.forEach((munro) => {
     const munroView = new MunroView(this.container, munro);
     munroView.render();
   });

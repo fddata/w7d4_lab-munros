@@ -9,16 +9,19 @@ const Munros = function () {
 Munros.prototype.bindEvents = function () {
 PubSub.subscribe('SelectView:change', (event) => {
   const selectedIndex = event.detail;
-  // console.log(event.detail);
-  this.publishRegionDetail(selectedIndex);
+  // console.log(this.regions);
+  selectedRegion = this.regions[selectedIndex]
+PubSub.publish('Munros:selected-region-ready', selectedRegion)
+
+
 });
 };
-
-Munros.prototype.publishRegionDetail = function (regionIndex) {
-const selectedRegion = this.region[regionIndex];
-PubSub.publish('Munros:selected-region-ready', selectedRegion)
-console.log(selectedRegion);
-};
+//
+// Munros.prototype.publishRegionDetail = function (regionIndex) {
+// const selectedRegion = this.region[regionIndex];
+//
+// // console.log(selectedRegion);
+// };
 
 
 
@@ -27,7 +30,7 @@ Munros.prototype.getData = function () {
   requestHelper.get((data) => {
     // this.munros = data;
     this.handleDataReady(data);
-    // console.log(this.regions);
+    console.log(this.regions);
     PubSub.publish('Munros:munro-all-regions-data-ready', this.regions);
   });
 };
