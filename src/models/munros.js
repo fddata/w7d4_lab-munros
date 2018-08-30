@@ -9,19 +9,38 @@ const Munros = function () {
 Munros.prototype.getData = function () {
   const requestHelper = new RequestHelper('https://munroapi.herokuapp.com/api/munros');
   requestHelper.get((data) => {
-    this.munros = data;
-    // console.log(this.munros);
-    PubSub.publish('Munros:munro-data-ready', this.munros);
+    // this.munros = data;
+    this.handleDataReady(data);
+    console.log(this.regions);
+    // PubSub.publish('Munros:munro-data-ready', this.munros);
   });
 };
 
 
 
-//
-// Munros.prototype.handleDataReady = function(mountains){
-//   const mountainName = this.getMunroNames(mountains);
-//   this.
-// }
 
+Munros.prototype.handleDataReady = function(munros){
+  const regionName = this.getRegionNames(munros);
+  this.modelRegions(munros, regionName);
+}
+
+Munros.prototype.getRegionNames = function (munros) {
+return munros.map(munro => munro.region).filter((region, index, regions) => regions.indexOf(region) === index );
+};
+
+
+Munros.prototype.modelRegions = function (munros, regionNames) {
+this.regions = regionNames.map((regionName) => {
+  return {
+    name: regionName,
+    munros: this.munrosByRegion(munros, regionName)
+  };
+});
+};
+
+
+Munros.prototype.munrosByRegion = function (munros, region) {
+return munros.filter(munro => munro.region === region);
+};
 
 module.exports = Munros;
