@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 const munros = new Munros();
+munros.bindEvents();
 munros.getData();
 
 

@@ -6,7 +6,7 @@ const SelectView = function (selectElement){
 
 SelectView.prototype.bindEvents = function () {
   PubSub.subscribe('Munros:munro-all-regions-data-ready', (evt) => {
-    console.log(event.detail);
+    // console.log(event.detail);
     this.populate(evt.detail)
   });
 //
