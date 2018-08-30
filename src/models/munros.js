@@ -12,7 +12,7 @@ Munros.prototype.getData = function () {
     // this.munros = data;
     this.handleDataReady(data);
     console.log(this.regions);
-    // PubSub.publish('Munros:munro-data-ready', this.munros);
+    PubSub.publish('Munros:munro-all-regions-data-ready', this.regions);
   });
 };
 
